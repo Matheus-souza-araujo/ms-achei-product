@@ -1,12 +1,11 @@
 import { randomUUID } from "crypto";
 import { ProductStatus } from "../libs/enums/product-status";
-import { Replace } from "../libs/replace";
+import { Replace } from "../libs/helpers/replace";
 
 
 export interface IProductProps {
   name: string;
   description: string;
-  image: string;
   status: ProductStatus;
   price: number;
   offer: boolean;
@@ -50,14 +49,6 @@ export class ProductEntity {
 
   public get description(): string {
     return this.props.description;
-  }
-
-  public set image(image: string) {
-    this.props.image = image;
-  }
-
-  public get image(): string {
-    return this.props.image;
   }
 
   public set status(status: ProductStatus) {

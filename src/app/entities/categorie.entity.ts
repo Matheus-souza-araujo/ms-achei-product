@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { CategorieStatus } from "../libs/enums/categorie-status";
-import { Replace } from "../libs/replace";
+import { Replace } from "../libs/helpers/replace";
 
 export interface ICategorieProps {
   name: string;

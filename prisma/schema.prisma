@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  productId        String             @id @map("product_id")
+  name             String
+  description      String
+  status           String
+  price            Float
+  offer            Boolean
+  storeId          String             @map("store_id")
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @default(now()) @map("updated_at")
+  ProductCategorie ProductCategorie[]
+  ImageProduct     ImageProduct[]
+
+  @@index([storeId])
+  @@map("product")
+}
+
+model Categorie {
+  categorieId      String             @id @map("categorie_id")
+  name             String
+  status           String
+  description      String
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @default(now()) @map("updated_at")
+  ProductCategorie ProductCategorie[]
+
+  @@map("categorie")
+}
+
+model ProductCategorie {
+  productCategorieId String    @id @map("product_categorie_id")
+  product            Product   @relation(fields: [productId], references: [productId])
+  categorie          Categorie @relation(fields: [categorieId], references: [categorieId])
+  status             String
+  productId          String    @map("product_id")
+  categorieId        String    @map("categorie_id")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+
+  @@map("product_categorie")
+}
+
+model ImageProduct {
+  imageProductId String   @id @map("image_product_id")
+  product        Product  @relation(fields: [productId], references: [productId])
+  productId      String   @map("product_id")
+  status         String
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @map("updated_at")
+
+  @@map("image_product")
+}

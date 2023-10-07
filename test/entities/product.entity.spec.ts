@@ -9,7 +9,6 @@ describe('product entity', () => {
       {
         name: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
-        image: faker.image.url(),
         offer: faker.datatype.boolean(),
         price: Number(faker.commerce.price()),
         status: ProductStatus.ACTIVE,

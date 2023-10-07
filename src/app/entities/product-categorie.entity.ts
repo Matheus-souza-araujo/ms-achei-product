@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { ProductCategorieStatus } from "../libs/enums/product-categorie-status";
-import { Replace } from "../libs/replace";
+import { Replace } from "../libs/helpers/replace";
 
 export interface IProductCategorieProps {
   productId: string;
