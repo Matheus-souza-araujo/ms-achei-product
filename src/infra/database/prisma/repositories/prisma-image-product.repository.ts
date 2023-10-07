@@ -1,17 +1,20 @@
 import { Injectable } from "@nestjs/common";
-import { CategorieEntity } from "src/app/entities/categorie.entity";
-import { CategorieRepository } from "src/app/repositories/categorie.repository";
+import { PrismaImageProductMapper } from "../mappers/prisma-image-product.mapper";
+import { ImageProductRepository } from "src/app/repositories/image-product.repository";
+import { ImageProductEntity } from "src/app/entities/image-product.entity";
+import { PrismaService } from "../prisma.service";
 
 @Injectable()
-export class PrismaImageProductRepository implements CategorieRepository {
-  create(categorie: CategorieEntity): Promise<CategorieEntity> {
-    throw new Error("Method not implemented.");
+export class PrismaImageProductRepository implements ImageProductRepository {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async craete(imageProduct: ImageProductEntity): Promise<ImageProductEntity> {
+    const imageProductPrisma = PrismaImageProductMapper.toPrisma(imageProduct)
+
+    const imageProductCreated = await this.prismaService.imageProduct.create({data: imageProductPrisma})
+
+    return PrismaImageProductMapper.toDomain(imageProductCreated);
   }
-  findById(categorieId: string): Promise<CategorieEntity> {
-    throw new Error("Method not implemented.");
-  }
-  update(categorie: CategorieEntity): Promise<CategorieEntity> {
-    throw new Error("Method not implemented.");
-  }
+
 
 }

@@ -56,6 +56,7 @@ model ImageProduct {
   imageProductId String   @id @map("image_product_id")
   product        Product  @relation(fields: [productId], references: [productId])
   productId      String   @map("product_id")
+  image          String
   status         String
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @default(now()) @map("updated_at")

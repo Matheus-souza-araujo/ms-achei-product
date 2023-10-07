@@ -1,8 +1,9 @@
 import { PutObjectCommand, PutObjectCommandOutput, S3Client } from '@aws-sdk/client-s3';
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { randomUUID } from 'crypto';
 import { StorageService, uploadFileResponse } from "src/app/services/storage";
+import { FailedToUploadImage } from './errors/failed-to-upload-image.error';
 
 @Injectable()
 export class S3Service implements StorageService {
@@ -15,18 +16,24 @@ export class S3Service implements StorageService {
   async uploadFile(fileName: string, file: Buffer): Promise<uploadFileResponse> {
     const fileId = `${randomUUID()}-${fileName}`;
 
-    await this.s3Client.send(
-      new PutObjectCommand(
-        {
-          Bucket: 'achei-product',
-          Key: fileId,
-          Body: file,
-        }
+    try {
+      await this.s3Client.send(
+        new PutObjectCommand(
+          {
+            Bucket: process.env.AWS_BUCKET,
+            Key: fileId,
+            Body: file,
+          }
+        )
       )
-    )
+    } catch (error) {
+      Logger.error('S3 Service error:',error)
+      throw new FailedToUploadImage()
+    }
+
 
     return {
-      path: `${process.env.AWS_BUCKET_URL}/${process.env.AWS_BUCKET}/${fileId}`,
+      path: `${process.env.AWS_BUCKET_URL}/${fileId}`,
     } 
   }
 }

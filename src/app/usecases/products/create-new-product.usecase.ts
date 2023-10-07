@@ -7,7 +7,7 @@ import { ProductRepository } from "src/app/repositories/product.repository";
 import { CategorieNotFound } from "./errors/categorie-not-found.error";
 import { ProductCategorieEntity } from "src/app/entities/product-categorie.entity";
 import { ProductCategorieStatus } from "src/app/libs/enums/product-categorie-status";
-import { StorageService } from "src/app/services/storage";
+import { StorageService, uploadFileResponse } from "src/app/services/storage";
 import { ImageProductRepository } from "src/app/repositories/image-product.repository";
 import { ImageProductEntity } from "src/app/entities/image-product.entity";
 import { ImageProductStatus } from "src/app/libs/enums/image-product-status";
@@ -34,15 +34,21 @@ export class CreateNewProductUseCase {
   ) {}
 
   async execute(request:CreateNewProductRequest): Promise<ProductEntity> {
-    const {name, description, image, status, price, offer, storeId, categorieId } = request
+    const 
+    {
+      name, 
+      description,
+      image, 
+      status, 
+      price, 
+      offer, 
+      storeId, 
+      categorieId 
+    } = request
 
     //TODO: Melhoria para o futuro é fazer a verificação se a loja realmente existe
 
     const categorie = await this.categorieRepository.findById(categorieId)
-
-    //TESTE APAGAR DEPOIS
-    const teste = await this.storageService.uploadFile(image.originalname, image.buffer)
-    console.log(teste)
 
     if(!categorie) {
       throw new CategorieNotFound();
@@ -61,19 +67,22 @@ export class CreateNewProductUseCase {
 
     const newProduct = await this.productRepository.create(product);
 
-    const imageUploaded = await this.storageService.uploadFile(image.originalname, image.buffer)
+    let imageUploaded: uploadFileResponse
+    try {
+      imageUploaded = await this.storageService.uploadFile(image.originalname, image.buffer)
+    } catch (error) {
+      await this.productRepository.deleteById(product.product_id)
+    }
 
     const newProductImage = new ImageProductEntity(
       {
         productId: newProduct.product_id,
-        //TODO: verificar qual é a url
         image: imageUploaded.path,
         status: ImageProductStatus.ACTIVE
       }
     )
 
     await this.imageProductRepository.craete(newProductImage)
-
 
     const productCategorie = new ProductCategorieEntity(
       {
@@ -82,7 +91,7 @@ export class CreateNewProductUseCase {
         status: ProductCategorieStatus.ACTIVE
       }
     )
-    //TODO: Garantir que caso não crie o relacionamento, seja feito o rollback do produto
+
     await this.productCategorieRepository.create(productCategorie)
 
     return newProduct;
