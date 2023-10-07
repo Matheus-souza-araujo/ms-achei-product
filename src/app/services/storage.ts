@@ -1,5 +1,7 @@
-import { PutObjectCommandOutput } from "@aws-sdk/client-s3";
 
+export interface uploadFileResponse{
+  path: string
+}
 export abstract class StorageService {
-  abstract uploadFile(fileName: string, file: Buffer): Promise<PutObjectCommandOutput>
+  abstract uploadFile(fileName: string, file: Buffer): Promise<uploadFileResponse>
 }

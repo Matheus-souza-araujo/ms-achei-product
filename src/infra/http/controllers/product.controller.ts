@@ -21,6 +21,17 @@ export class ProductController {
     )
     file: Express.Multer.File,
   ) {
-    return await this.createNewProductUseCase.execute({name, description, categorieId, status, storeId, offer, price, image: file})
+    return await this.createNewProductUseCase.execute(
+      {
+        name, 
+        description, 
+        categorieId, 
+        status, 
+        storeId, 
+        offer, 
+        price, 
+        image: file
+      }
+    )
   }
 }

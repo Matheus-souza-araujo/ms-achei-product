@@ -40,6 +40,10 @@ export class CreateNewProductUseCase {
 
     const categorie = await this.categorieRepository.findById(categorieId)
 
+    //TESTE APAGAR DEPOIS
+    const teste = await this.storageService.uploadFile(image.originalname, image.buffer)
+    console.log(teste)
+
     if(!categorie) {
       throw new CategorieNotFound();
     }
@@ -59,13 +63,11 @@ export class CreateNewProductUseCase {
 
     const imageUploaded = await this.storageService.uploadFile(image.originalname, image.buffer)
 
-    console.log(imageUploaded)
-
     const newProductImage = new ImageProductEntity(
       {
         productId: newProduct.product_id,
         //TODO: verificar qual é a url
-        image: imageUploaded.ChecksumCRC32,
+        image: imageUploaded.path,
         status: ImageProductStatus.ACTIVE
       }
     )

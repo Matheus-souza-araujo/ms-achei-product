@@ -1,7 +1,8 @@
-import { PutObjectCommand, PutObjectCommandOutput, S3Client } from "@aws-sdk/client-s3";
+import { PutObjectCommand, PutObjectCommandOutput, S3Client } from '@aws-sdk/client-s3';
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { StorageService } from "src/app/services/storage";
+import { randomUUID } from 'crypto';
+import { StorageService, uploadFileResponse } from "src/app/services/storage";
 
 @Injectable()
 export class S3Service implements StorageService {
@@ -11,17 +12,21 @@ export class S3Service implements StorageService {
 
   constructor(private readonly configService: ConfigService) {}
 
-  async uploadFile(fileName: string, file: Buffer): Promise<PutObjectCommandOutput> {
-    const imageUpload = await this.s3Client.send(
+  async uploadFile(fileName: string, file: Buffer): Promise<uploadFileResponse> {
+    const fileId = `${randomUUID()}-${fileName}`;
+
+    await this.s3Client.send(
       new PutObjectCommand(
         {
           Bucket: 'achei-product',
-          Key: fileName,
-          Body: file
+          Key: fileId,
+          Body: file,
         }
       )
     )
 
-    return imageUpload;
+    return {
+      path: `${process.env.AWS_BUCKET_URL}/${process.env.AWS_BUCKET}/${fileId}`,
+    } 
   }
 }
