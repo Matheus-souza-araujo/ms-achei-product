@@ -1,63 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { ProductEntity } from 'src/app/entities/product.entity';
-import { ProductRepository } from 'src/app/repositories/product.repository';
-import { PrismaProductMapper } from '../mappers/prisma-product.mapper';
-import { PrismaService } from '../prisma.service';
-import { FindAllProductsByStoreType } from 'src/app/repositories/types/product/find-all-products-by-store-Id.type';
+import { Injectable } from "@nestjs/common";
+import { ProductEntity } from "src/app/entities/product.entity";
+import { ProductRepository } from "src/app/repositories/product.repository";
+import { PrismaProductMapper } from "../mappers/prisma-product.mapper";
+import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class PrismaProductRepository implements ProductRepository {
   constructor(private readonly prismaService: PrismaService) {}
-
+  
   async create(product: ProductEntity): Promise<ProductEntity> {
-    const producPrisma = PrismaProductMapper.toPrisma(product);
+    const producPrisma = PrismaProductMapper.toPrisma(product)
 
-    const productCreated = await this.prismaService.product.create({
-      data: producPrisma,
-    });
+    const productCreated = await this.prismaService.product.create({data: producPrisma})
 
-    return PrismaProductMapper.toDomain(productCreated);
+    return PrismaProductMapper.toDomain(productCreated)
   }
   async findById(productId: string): Promise<ProductEntity> {
-    const product = await this.prismaService.product.findUnique({
-      where: { productId },
-    });
+    const product = await this.prismaService.product.findUnique({where: {productId}})
 
-    return PrismaProductMapper.toDomain(product);
+    return PrismaProductMapper.toDomain(product)
   }
   update(product: ProductEntity): Promise<ProductEntity> {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   async deleteById(productId: string): Promise<void> {
-    await this.prismaService.product.delete({ where: { productId } });
+    await this.prismaService.product.delete({where:{productId}})
   }
 
-  async findAllProductsByStoreId({
-    storeId,
-    name,
-    status,
-    offer,
-    start_date,
-    end_date,
-  }: FindAllProductsByStoreType): Promise<[] | ProductEntity[]> {
-    const product = await this.prismaService.product.findMany({
-      where: {
-        storeId: storeId,
-        name: { contains: name },
-        status: status,
-        offer: offer,
-        createdAt: {
-          lte: new Date(start_date),
-          gte: new Date(end_date),
-        },
-      },
-    });
 
-    if (product.length < 1) {
-      return [];
-    }
-
-    return product.map(PrismaProductMapper.toDomain);
-  }
 }
