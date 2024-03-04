@@ -1,4 +1,4 @@
-import { CategorieEntity } from "../entities/categorie.entity";
+import { CategorieEntity } from '../entities/categorie.entity';
 
 export abstract class CategorieRepository {
   abstract create(categorie: CategorieEntity): Promise<CategorieEntity>;

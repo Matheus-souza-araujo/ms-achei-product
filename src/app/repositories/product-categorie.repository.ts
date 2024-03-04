@@ -1,5 +1,7 @@
-import { ProductCategorieEntity } from "../entities/product-categorie.entity";
+import { ProductCategorieEntity } from '../entities/product-categorie.entity';
 
-export abstract class  ProductCategorieRepository {
-  abstract create(productCategorie: ProductCategorieEntity): Promise<ProductCategorieEntity>
+export abstract class ProductCategorieRepository {
+  abstract create(
+    productCategorie: ProductCategorieEntity,
+  ): Promise<ProductCategorieEntity>;
 }
