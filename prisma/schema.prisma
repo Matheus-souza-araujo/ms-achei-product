@@ -41,8 +41,8 @@ model Categorie {
 
 model ProductCategorie {
   productCategorieId String    @id @map("product_categorie_id")
-  product            Product   @relation(fields: [productId], references: [productId])
-  categorie          Categorie @relation(fields: [categorieId], references: [categorieId])
+  Product            Product   @relation(fields: [productId], references: [productId])
+  Categorie          Categorie @relation(fields: [categorieId], references: [categorieId])
   status             String
   productId          String    @map("product_id")
   categorieId        String    @map("categorie_id")

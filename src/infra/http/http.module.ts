@@ -1,15 +1,14 @@
-import { Module } from "@nestjs/common";
-import { ProductController } from "./controllers/product.controller";
-import { CreateNewProductUseCase } from "src/app/usecases/products/create-new-product.usecase";
-import { DatabaseModule } from "../database/database.module";
-import { ServiceModule } from "../services/service.module";
-import { StorageModule } from "../services/storage/storage.module";
+import { Module } from '@nestjs/common';
+import { ProductController } from './controllers/product.controller';
+import { DatabaseModule } from '../database/database.module';
+import { StorageModule } from '../services/storage/storage.module';
+import { CreateProductUseCase } from 'src/app/usecases/products/create-product.usecase';
+import { FindAllProductUseCase } from 'src/app/usecases/products/find-all-product.usecase';
 
 @Module({
   imports: [DatabaseModule, StorageModule],
-  providers: [CreateNewProductUseCase],
+  providers: [CreateProductUseCase, FindAllProductUseCase],
   exports: [],
-  controllers: [ProductController]
+  controllers: [ProductController],
 })
-
 export class HttpModule {}

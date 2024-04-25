@@ -12,16 +12,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateNewProductUseCase } from 'src/app/usecases/products/create-new-product.usecase';
+import { CreateProductUseCase } from 'src/app/usecases/products/create-product.usecase';
 import { CreateProductDTO } from '../dto/product/create-product.dto';
-import { FindAllProductsByStoreIdDTO } from '../dto/product/find-all-products-by-store-id.dto';
-import { FindAllProductsByStoreIdUseCase } from 'src/app/usecases/products/find-all-products-by-store-id.usecase';
+import { FindAllProductUseCase } from 'src/app/usecases/products/find-all-product.usecase';
+import { FindAllProductDTO } from '../dto/product/find-all-product.dto';
+import { ProductViewModel } from '../view-models/product.view-model';
 
 @Controller('product')
 export class ProductController {
   constructor(
-    private readonly createNewProductUseCase: CreateNewProductUseCase,
-    private readonly findAllProductsByStoreIdUseCase: FindAllProductsByStoreIdUseCase,
+    private readonly createProductUseCase: CreateProductUseCase,
+    private readonly findAllProductUseCase: FindAllProductUseCase,
   ) {}
 
   @Post()
@@ -40,14 +41,14 @@ export class ProductController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 1000 }),
+          new MaxFileSizeValidator({ maxSize: 1000000 }),
           new FileTypeValidator({ fileType: 'image/jpeg' }),
         ],
       }),
     )
     file: Express.Multer.File,
   ) {
-    return await this.createNewProductUseCase.execute({
+    const product = await this.createProductUseCase.execute({
       name,
       description,
       categorieId,
@@ -57,21 +58,21 @@ export class ProductController {
       price,
       image: file,
     });
+
+    return ProductViewModel.toHttp(product);
   }
 
-  @Get('find-all/storeId/:storeId')
-  async findAllProductsByStoreId(
-    @Param('storeId') storeId: string,
-    @Query()
-    { name, offer, status, start_date, end_date }: FindAllProductsByStoreIdDTO,
+  @Get('/find-all')
+  async findAll(
+    @Query() { categorieId, offer, status, storeId }: FindAllProductDTO,
   ) {
-    return await this.findAllProductsByStoreIdUseCase.execute({
-      storeId,
-      name,
+    const products = await this.findAllProductUseCase.execute({
+      categorieId,
       offer,
       status,
-      start_date,
-      end_date,
+      storeId,
     });
+
+    return products.map(ProductViewModel.toHttp);
   }
 }

@@ -1,6 +1,8 @@
-import { randomUUID } from "crypto";
-import { ProductCategorieStatus } from "../libs/enums/product-categorie-status";
-import { Replace } from "../libs/helpers/replace";
+import { randomUUID } from 'crypto';
+import { ProductCategorieStatus } from '../libs/enums/product-categorie-status';
+import { Replace } from '../libs/helpers/replace';
+import { ProductEntity } from './product.entity';
+import { CategorieEntity } from './categorie.entity';
 
 export interface IProductCategorieProps {
   productId: string;
@@ -8,6 +10,8 @@ export interface IProductCategorieProps {
   status: ProductCategorieStatus;
   createdAt: Date;
   updatedAt: Date;
+  product?: ProductEntity;
+  categorie?: CategorieEntity;
 }
 
 export class ProductCategorieEntity {
@@ -15,7 +19,10 @@ export class ProductCategorieEntity {
   private props: IProductCategorieProps;
 
   constructor(
-    props: Replace<IProductCategorieProps, { createdAt?: Date, updatedAt?: Date }>,
+    props: Replace<
+      IProductCategorieProps,
+      { createdAt?: Date; updatedAt?: Date }
+    >,
     product_categorie_id?: string,
   ) {
     this._product_categorie_id = product_categorie_id ?? randomUUID();
@@ -23,7 +30,6 @@ export class ProductCategorieEntity {
       ...props,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
-
     };
   }
 
@@ -61,5 +67,13 @@ export class ProductCategorieEntity {
 
   public get updatedAt(): Date | null | undefined {
     return this.props.updatedAt;
+  }
+
+  public get product(): ProductEntity {
+    return this.props.product;
+  }
+
+  public get categorie(): CategorieEntity {
+    return this.props.categorie;
   }
 }

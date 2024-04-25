@@ -1,7 +1,8 @@
-import { randomUUID } from "crypto";
-import { ProductStatus } from "../libs/enums/product-status";
-import { Replace } from "../libs/helpers/replace";
-
+import { randomUUID } from 'crypto';
+import { ProductStatus } from '../libs/enums/product-status';
+import { Replace } from '../libs/helpers/replace';
+import { ProductCategorieEntity } from './product-categorie.entity';
+import { ImageProductEntity } from './image-product.entity';
 
 export interface IProductProps {
   name: string;
@@ -12,6 +13,8 @@ export interface IProductProps {
   storeId: string;
   createdAt: Date;
   updatedAt: Date;
+  productCategorie?: Partial<ProductCategorieEntity[]>;
+  imageProduct?: Partial<ImageProductEntity[]>;
 }
 
 export class ProductEntity {
@@ -19,7 +22,7 @@ export class ProductEntity {
   private props: IProductProps;
 
   constructor(
-    props: Replace<IProductProps, { createdAt?: Date, updatedAt?: Date }>,
+    props: Replace<IProductProps, { createdAt?: Date; updatedAt?: Date }>,
     product_id?: string,
   ) {
     this._product_id = product_id ?? randomUUID();
@@ -27,7 +30,6 @@ export class ProductEntity {
       ...props,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
-
     };
   }
 
@@ -91,4 +93,11 @@ export class ProductEntity {
     return this.props.updatedAt;
   }
 
+  public get productCategorie(): ProductCategorieEntity[] {
+    return this.props.productCategorie;
+  }
+
+  public get imageProduct(): ImageProductEntity[] {
+    return this.props.imageProduct;
+  }
 }
