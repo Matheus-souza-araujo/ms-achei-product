@@ -1,6 +1,6 @@
-import { randomUUID } from "crypto";
-import { CategorieStatus } from "../libs/enums/categorie-status";
-import { Replace } from "../libs/helpers/replace";
+import { CategorieStatus } from '@app/libs/enums/categorie-status';
+import { Replace } from '@app/libs/helpers/replace';
+import { randomUUID } from 'crypto';
 
 export interface ICategorieProps {
   name: string;
@@ -15,7 +15,7 @@ export class CategorieEntity {
   private props: ICategorieProps;
 
   constructor(
-    props: Replace<ICategorieProps, { createdAt?: Date, updatedAt?: Date }>,
+    props: Replace<ICategorieProps, { createdAt?: Date; updatedAt?: Date }>,
     category_id?: string,
   ) {
     this._category_id = category_id ?? randomUUID();

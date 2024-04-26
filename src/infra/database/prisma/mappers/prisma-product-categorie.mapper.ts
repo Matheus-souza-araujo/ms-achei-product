@@ -1,8 +1,8 @@
 import { Categorie, Product, ProductCategorie } from '@prisma/client';
-import { ProductCategorieEntity } from 'src/app/entities/product-categorie.entity';
-import { ProductCategorieStatus } from 'src/app/libs/enums/product-categorie-status';
-import { PrismaCategorieMapper } from './prisma-categorie.mapper';
-import { PrismaProductMapper } from './prisma-product.mapper';
+import { PrismaCategorieMapper } from '@infra/database/prisma/mappers/prisma-categorie.mapper';
+import { PrismaProductMapper } from '@infra/database/prisma/mappers/prisma-product.mapper';
+import { ProductCategorieEntity } from '@app/entities/product-categorie.entity';
+import { ProductCategorieStatus } from '@app/libs/enums/product-categorie-status';
 
 export class PrismaProductCategorieMapper {
   static toPrisma(

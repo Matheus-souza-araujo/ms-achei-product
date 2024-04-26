@@ -1,5 +1,5 @@
-import { ProductEntity } from '../entities/product.entity';
-import { FindManyProduct } from './types/product-repository/find-many,type';
+import { ProductEntity } from '@app/entities/product.entity';
+import { FindManyProduct } from '@app/repositories/types/product-repository/find-many,type';
 
 export abstract class ProductRepository {
   abstract create(product: ProductEntity): Promise<ProductEntity>;

@@ -1,6 +1,6 @@
-import { randomUUID } from "crypto";
-import { Replace } from "../libs/helpers/replace";
-import { ImageProductStatus } from "../libs/enums/image-product-status";
+import { ImageProductStatus } from '@app/libs/enums/image-product-status';
+import { Replace } from '@app/libs/helpers/replace';
+import { randomUUID } from 'crypto';
 
 export interface IImageProductProps {
   productId: string;
@@ -14,7 +14,7 @@ export class ImageProductEntity {
   private props: IImageProductProps;
 
   constructor(
-    props: Replace<IImageProductProps, { createdAt?: Date, updatedAt?: Date }>,
+    props: Replace<IImageProductProps, { createdAt?: Date; updatedAt?: Date }>,
     image_product_id?: string,
   ) {
     this._image_product_id = image_product_id ?? randomUUID();
@@ -22,7 +22,7 @@ export class ImageProductEntity {
       ...props,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
-    }
+    };
   }
 
   public get image_product_id() {
@@ -61,4 +61,3 @@ export class ImageProductEntity {
     return this.props.updatedAt;
   }
 }
-

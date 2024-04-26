@@ -4,10 +4,10 @@ import {
   Product,
   ProductCategorie,
 } from '@prisma/client';
-import { ProductEntity } from 'src/app/entities/product.entity';
-import { ProductStatus } from 'src/app/libs/enums/product-status';
-import { PrismaProductCategorieMapper } from './prisma-product-categorie.mapper';
-import { PrismaImageProductMapper } from './prisma-image-product.mapper';
+import { PrismaProductCategorieMapper } from '@infra/database/prisma/mappers/prisma-product-categorie.mapper';
+import { PrismaImageProductMapper } from '@infra/database/prisma/mappers/prisma-image-product.mapper';
+import { ProductEntity } from '@app/entities/product.entity';
+import { ProductStatus } from '@app/libs/enums/product-status';
 
 export class PrismaProductMapper {
   static toPrisma(product: ProductEntity): Product {

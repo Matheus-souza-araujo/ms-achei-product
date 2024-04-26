@@ -1,16 +1,16 @@
+import { ProductEntity } from '@app/entities/product.entity';
+import { CategorieRepository } from '@app/repositories/categorie.repository';
+import { ImageProductRepository } from '@app/repositories/image-product.repository';
+import { ProductCategorieRepository } from '@app/repositories/product-categorie.repository';
+import { ProductRepository } from '@app/repositories/product.repository';
+import { StorageService, uploadFileResponse } from '@app/services/storage';
 import { Injectable } from '@nestjs/common';
-import { ProductEntity } from 'src/app/entities/product.entity';
-import { CategorieRepository } from 'src/app/repositories/categorie.repository';
-import { ProductCategorieRepository } from 'src/app/repositories/product-categorie.repository';
-import { ProductRepository } from 'src/app/repositories/product.repository';
-import { CategorieNotFound } from './errors/categorie-not-found.error';
-import { ProductCategorieEntity } from 'src/app/entities/product-categorie.entity';
-import { ProductCategorieStatus } from 'src/app/libs/enums/product-categorie-status';
-import { StorageService, uploadFileResponse } from 'src/app/services/storage';
-import { ImageProductRepository } from 'src/app/repositories/image-product.repository';
-import { ImageProductEntity } from 'src/app/entities/image-product.entity';
-import { ImageProductStatus } from 'src/app/libs/enums/image-product-status';
-import { CreateNewProductRequest } from './types/create-product.type';
+import { CreateNewProductRequest } from '@app/usecases/products/types/create-product.type';
+import { CategorieNotFound } from '@app/usecases/products/errors/categorie-not-found.error';
+import { ImageProductEntity } from '@app/entities/image-product.entity';
+import { ProductCategorieEntity } from '@app/entities/product-categorie.entity';
+import { ImageProductStatus } from '@app/libs/enums/image-product-status';
+import { ProductCategorieStatus } from '@app/libs/enums/product-categorie-status';
 
 @Injectable()
 export class CreateProductUseCase {

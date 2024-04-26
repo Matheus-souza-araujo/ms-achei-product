@@ -1,10 +1,9 @@
-import { Module } from "@nestjs/common";
-import { StorageModule } from "./storage/storage.module";
+import { Module } from '@nestjs/common';
+import { StorageModule } from '@infra/services/storage/storage.module';
 
 @Module({
   imports: [StorageModule],
   providers: [],
-  exports: []
+  exports: [],
 })
-
 export class ServiceModule {}

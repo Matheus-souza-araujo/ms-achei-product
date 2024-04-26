@@ -1,4 +1,4 @@
-import { ImageProductEntity } from 'src/app/entities/image-product.entity';
+import { ImageProductEntity } from '@app/entities/image-product.entity';
 
 export class ImageProductViewModel {
   static toHttp(imageProduct: Partial<ImageProductEntity>) {
