@@ -89,6 +89,10 @@ export class ProductEntity {
     return this.props.createdAt;
   }
 
+  public updated() {
+    this.props.updatedAt = new Date();
+  }
+
   public get updatedAt(): Date | null | undefined {
     return this.props.updatedAt;
   }

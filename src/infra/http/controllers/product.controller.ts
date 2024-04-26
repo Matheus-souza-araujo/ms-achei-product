@@ -9,7 +9,9 @@ import {
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
+  Patch,
   Post,
+  Put,
   Query,
   UploadedFile,
   UseInterceptors,
@@ -18,6 +20,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateProductDTO } from '@infra/http/dto/product/create-product.dto';
 import { FindAllProductDTO } from '@infra/http/dto/product/find-all-product.dto';
 import { ProductViewModel } from '@infra/http/view-models/product.view.model';
+import { UpdateProductDTO } from '@infra/http/dto/product/update-product.dto';
+import { UpdateProductUseCase } from '@app/usecases/products/update-product.usecase';
 
 @Controller('product')
 export class ProductController {
@@ -25,6 +29,7 @@ export class ProductController {
     private readonly createProductUseCase: CreateProductUseCase,
     private readonly findAllProductUseCase: FindAllProductUseCase,
     private readonly findByIdProductUseCase: FindByIdProductUseCase,
+    private readonly updateProductUseCase: UpdateProductUseCase,
   ) {}
 
   @Post()
@@ -83,5 +88,22 @@ export class ProductController {
     const product = await this.findByIdProductUseCase.execute(productId);
 
     return ProductViewModel.toHttp(product);
+  }
+
+  @Put('/:productId')
+  async update(
+    @Param('productId') productId: string,
+    @Body()
+    { name, description, status, storeId, offer, price }: UpdateProductDTO,
+  ) {
+    const product = await this.updateProductUseCase.execute({
+      productId,
+      name,
+      description,
+      status,
+      storeId,
+      offer,
+      price,
+    });
   }
 }
