@@ -1,9 +1,9 @@
+import { ProductRepository } from '@app/repositories/product.repository';
 import { Injectable } from '@nestjs/common';
-import { ProductEntity } from 'src/app/entities/product.entity';
-import { ProductRepository } from 'src/app/repositories/product.repository';
-import { PrismaProductMapper } from '../mappers/prisma-product.mapper';
-import { PrismaService } from '../prisma.service';
-import { FindManyProduct } from 'src/app/repositories/types/product-repository/find-many,type';
+import { PrismaService } from '@infra/database/prisma/prisma.service';
+import { ProductEntity } from '@app/entities/product.entity';
+import { PrismaProductMapper } from '@infra/database/prisma/mappers/prisma-product.mapper';
+import { FindManyProduct } from '@app/repositories/types/product-repository/find-many,type';
 
 @Injectable()
 export class PrismaProductRepository implements ProductRepository {

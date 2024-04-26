@@ -1,6 +1,6 @@
+import { ProductStatus } from '@app/libs/enums/product-status';
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsIn, IsOptional, IsString } from 'class-validator';
-import { ProductStatus } from 'src/app/libs/enums/product-status';
 
 export class FindAllProductDTO {
   @IsString()

@@ -1,19 +1,26 @@
-import { Injectable } from "@nestjs/common";
-import { ProductCategorieEntity } from "src/app/entities/product-categorie.entity";
-import { ProductCategorieRepository } from "src/app/repositories/product-categorie.repository";
-import { PrismaService } from "../prisma.service";
-import { PrismaProductCategorieMapper } from "../mappers/prisma-product-categorie.mapper";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@infra/database/prisma/prisma.service';
+import { PrismaProductCategorieMapper } from '@infra/database/prisma/mappers/prisma-product-categorie.mapper';
+import { ProductCategorieRepository } from '@app/repositories/product-categorie.repository';
+import { ProductCategorieEntity } from '@app/entities/product-categorie.entity';
 
 @Injectable()
-export class PrismaProductCategorieRepository implements ProductCategorieRepository {
+export class PrismaProductCategorieRepository
+  implements ProductCategorieRepository
+{
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(productCategorie: ProductCategorieEntity): Promise<ProductCategorieEntity> {
-    const productCategoriePrisma = PrismaProductCategorieMapper.toPrisma(productCategorie)
+  async create(
+    productCategorie: ProductCategorieEntity,
+  ): Promise<ProductCategorieEntity> {
+    const productCategoriePrisma =
+      PrismaProductCategorieMapper.toPrisma(productCategorie);
 
-    const productCategorieCreated = await this.prismaService.productCategorie.create({data: productCategoriePrisma})
+    const productCategorieCreated =
+      await this.prismaService.productCategorie.create({
+        data: productCategoriePrisma,
+      });
 
-    return PrismaProductCategorieMapper.toDomain(productCategorieCreated)
+    return PrismaProductCategorieMapper.toDomain(productCategorieCreated);
   }
-
 }

@@ -1,8 +1,8 @@
+import { ProductCategorieStatus } from '@app/libs/enums/product-categorie-status';
 import { randomUUID } from 'crypto';
-import { ProductCategorieStatus } from '../libs/enums/product-categorie-status';
-import { Replace } from '../libs/helpers/replace';
-import { ProductEntity } from './product.entity';
-import { CategorieEntity } from './categorie.entity';
+import { ProductEntity } from '@app/entities/product.entity';
+import { CategorieEntity } from '@app/entities/categorie.entity';
+import { Replace } from '@app/libs/helpers/replace';
 
 export interface IProductCategorieProps {
   productId: string;

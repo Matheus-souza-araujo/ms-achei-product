@@ -1,7 +1,7 @@
+import { ProductEntity } from '@app/entities/product.entity';
+import { ProductRepository } from '@app/repositories/product.repository';
 import { Injectable } from '@nestjs/common';
-import { ProductRepository } from 'src/app/repositories/product.repository';
-import { ProductNotFound } from './errors/product-not-found.error';
-import { ProductEntity } from 'src/app/entities/product.entity';
+import { ProductNotFound } from '@app/usecases/products/errors/product-not-found.error';
 
 @Injectable()
 export class FindByIdProductUseCase {

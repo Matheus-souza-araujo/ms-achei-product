@@ -1,6 +1,6 @@
-import { ProductCategorieEntity } from 'src/app/entities/product-categorie.entity';
-import { ProductViewModel } from './product.view.model';
-import { CategorieViewModel } from './categorie.view.model';
+import { ProductViewModel } from '@infra/http/view-models/product.view.model';
+import { CategorieViewModel } from '@infra/http/view-models/categorie.view.model';
+import { ProductCategorieEntity } from '@app/entities/product-categorie.entity';
 
 export class ProductCategorieViewModel {
   static toHttp(productCategorie: Partial<ProductCategorieEntity>) {

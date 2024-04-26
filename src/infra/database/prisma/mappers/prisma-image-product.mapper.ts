@@ -1,6 +1,6 @@
-import { ImageProduct } from "@prisma/client";
-import { ImageProductEntity } from "src/app/entities/image-product.entity";
-import { ImageProductStatus } from "src/app/libs/enums/image-product-status";
+import { ImageProductEntity } from '@app/entities/image-product.entity';
+import { ImageProductStatus } from '@app/libs/enums/image-product-status';
+import { ImageProduct } from '@prisma/client';
 
 export class PrismaImageProductMapper {
   static toPrisma(imageProductEntity: ImageProductEntity): ImageProduct {
@@ -8,9 +8,12 @@ export class PrismaImageProductMapper {
       imageProductId: imageProductEntity.image_product_id,
       productId: imageProductEntity.productId,
       image: imageProductEntity.image,
-      status: imageProductEntity.status === ImageProductStatus.ACTIVE ? ImageProductStatus.ACTIVE : ImageProductStatus.INACTIVE,
+      status:
+        imageProductEntity.status === ImageProductStatus.ACTIVE
+          ? ImageProductStatus.ACTIVE
+          : ImageProductStatus.INACTIVE,
       createdAt: imageProductEntity.createdAt,
-      updatedAt: imageProductEntity.updatedAt
+      updatedAt: imageProductEntity.updatedAt,
     };
   }
 
@@ -19,9 +22,12 @@ export class PrismaImageProductMapper {
       {
         productId: raw.productId,
         image: raw.image,
-        status: raw.status === ImageProductStatus.ACTIVE ? ImageProductStatus.ACTIVE : ImageProductStatus.INACTIVE,
+        status:
+          raw.status === ImageProductStatus.ACTIVE
+            ? ImageProductStatus.ACTIVE
+            : ImageProductStatus.INACTIVE,
         createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt
+        updatedAt: raw.updatedAt,
       },
       raw.imageProductId,
     );

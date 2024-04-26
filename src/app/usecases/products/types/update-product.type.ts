@@ -1,4 +1,4 @@
-import { ProductStatus } from 'src/app/libs/enums/product-status';
+import { ProductStatus } from '@app/libs/enums/product-status';
 
 export type UpdateProductRequest = {
   productId: string;

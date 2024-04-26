@@ -1,7 +1,6 @@
-import { Categorie } from "@prisma/client";
-import { CategorieEntity } from "src/app/entities/categorie.entity";
-import { CategorieStatus } from "src/app/libs/enums/categorie-status";
-
+import { CategorieEntity } from '@app/entities/categorie.entity';
+import { CategorieStatus } from '@app/libs/enums/categorie-status';
+import { Categorie } from '@prisma/client';
 export class PrismaCategorieMapper {
   static toPrisma(categorie: CategorieEntity): Categorie {
     return {
@@ -9,8 +8,8 @@ export class PrismaCategorieMapper {
       name: categorie.name,
       description: categorie.description,
       status: categorie.status,
-      createdAt:categorie.createdAt,
-      updatedAt: categorie.updatedAt
+      createdAt: categorie.createdAt,
+      updatedAt: categorie.updatedAt,
     };
   }
 
@@ -19,9 +18,12 @@ export class PrismaCategorieMapper {
       {
         name: raw.name,
         description: raw.description,
-        status: raw.status === CategorieStatus.ACTIVE ? CategorieStatus.ACTIVE : CategorieStatus.INACTIVE,
+        status:
+          raw.status === CategorieStatus.ACTIVE
+            ? CategorieStatus.ACTIVE
+            : CategorieStatus.INACTIVE,
         createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt
+        updatedAt: raw.updatedAt,
       },
       raw.categorieId,
     );

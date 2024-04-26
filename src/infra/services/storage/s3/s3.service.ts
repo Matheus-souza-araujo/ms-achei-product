@@ -1,13 +1,9 @@
-import {
-  PutObjectCommand,
-  PutObjectCommandOutput,
-  S3Client,
-} from '@aws-sdk/client-s3';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomUUID } from 'crypto';
-import { StorageService, uploadFileResponse } from 'src/app/services/storage';
-import { FailedToUploadImage } from './errors/failed-to-upload-image.error';
+import { FailedToUploadImage } from '@infra/services/storage/s3/errors/failed-to-upload-image.error';
+import { StorageService, uploadFileResponse } from '@app/services/storage';
 
 @Injectable()
 export class S3Service implements StorageService {

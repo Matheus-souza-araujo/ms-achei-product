@@ -1,6 +1,12 @@
-import { Transform } from "class-transformer";
-import { IsBoolean, IsIn, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { ProductStatus } from "src/app/libs/enums/product-status";
+import { ProductStatus } from '@app/libs/enums/product-status';
+import { Transform } from 'class-transformer';
+import {
+  IsBoolean,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
 export class CreateProductDTO {
   @IsString()
@@ -15,7 +21,7 @@ export class CreateProductDTO {
   @IsNotEmpty()
   @IsIn([ProductStatus.ACTIVE, ProductStatus.INACTIVE])
   status: ProductStatus;
-  
+
   @IsNumber()
   @IsNotEmpty()
   @Transform(({ value }) => {
@@ -36,5 +42,5 @@ export class CreateProductDTO {
 
   @IsString()
   @IsNotEmpty()
-  categorieId: string  
+  categorieId: string;
 }

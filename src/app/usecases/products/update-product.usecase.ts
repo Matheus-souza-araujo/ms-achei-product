@@ -1,15 +1,11 @@
+import { ProductRepository } from '@app/repositories/product.repository';
 import { Injectable } from '@nestjs/common';
-import { ProductRepository } from 'src/app/repositories/product.repository';
-import { UpdateProductRequest } from './types/update-product.type';
-import { CategorieRepository } from 'src/app/repositories/categorie.repository';
-import { ProductNotFound } from './errors/product-not-found.error';
+import { UpdateProductRequest } from '@app/usecases/products/types/update-product.type';
+import { ProductNotFound } from '@app/usecases/products/errors/product-not-found.error';
 
 @Injectable()
 export class UpdateProductUseCase {
-  constructor(
-    private readonly productRepository: ProductRepository,
-    private readonly categorieRepository: CategorieRepository,
-  ) {}
+  constructor(private readonly productRepository: ProductRepository) {}
 
   async execute(request: UpdateProductRequest) {
     const { productId, name, description, status, price, offer, storeId } =

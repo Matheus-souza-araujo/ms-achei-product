@@ -1,4 +1,4 @@
-import { CategorieEntity } from 'src/app/entities/categorie.entity';
+import { CategorieEntity } from '@app/entities/categorie.entity';
 
 export class CategorieViewModel {
   static toHttp(categorie: Partial<CategorieEntity>) {
