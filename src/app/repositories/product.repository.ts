@@ -5,6 +5,6 @@ export abstract class ProductRepository {
   abstract create(product: ProductEntity): Promise<ProductEntity>;
   abstract findById(productId: string): Promise<ProductEntity | null>;
   abstract findMany(params: FindManyProduct): Promise<ProductEntity[] | []>;
-  abstract update(product: ProductEntity): Promise<ProductEntity>;
+  abstract update(product: ProductEntity): Promise<void>;
   abstract deleteById(productId: string): Promise<void>;
 }

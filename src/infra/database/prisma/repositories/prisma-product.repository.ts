@@ -120,8 +120,15 @@ export class PrismaProductRepository implements ProductRepository {
     return products.map(PrismaProductMapper.toDomain);
   }
 
-  update(product: ProductEntity): Promise<ProductEntity> {
-    throw new Error('Method not implemented.');
+  async update(product: ProductEntity): Promise<void> {
+    const productPrisma = PrismaProductMapper.toPrisma(product);
+
+    await this.prismaService.product.update({
+      where: {
+        productId: productPrisma.productId,
+      },
+      data: productPrisma,
+    });
   }
 
   async deleteById(productId: string): Promise<void> {

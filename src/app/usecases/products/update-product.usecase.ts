@@ -7,7 +7,7 @@ import { ProductNotFound } from '@app/usecases/products/errors/product-not-found
 export class UpdateProductUseCase {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  async execute(request: UpdateProductRequest) {
+  async execute(request: UpdateProductRequest): Promise<void> {
     const { productId, name, description, status, price, offer, storeId } =
       request;
 
@@ -23,6 +23,7 @@ export class UpdateProductUseCase {
     product.price = price;
     product.offer = offer;
     product.storeId = storeId;
+    product.updated();
 
     await this.productRepository.update(product);
   }
