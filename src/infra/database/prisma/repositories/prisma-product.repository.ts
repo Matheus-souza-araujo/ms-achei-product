@@ -28,6 +28,7 @@ export class PrismaProductRepository implements ProductRepository {
         ImageProduct: true,
       },
     });
+    console.log(productCreated);
 
     return PrismaProductMapper.toDomain(productCreated);
   }

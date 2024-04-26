@@ -16,7 +16,7 @@ import { CreateProductUseCase } from 'src/app/usecases/products/create-product.u
 import { CreateProductDTO } from '../dto/product/create-product.dto';
 import { FindAllProductUseCase } from 'src/app/usecases/products/find-all-product.usecase';
 import { FindAllProductDTO } from '../dto/product/find-all-product.dto';
-import { ProductViewModel } from '../view-models/product.view-model';
+import { ProductViewModel } from '../view-models/product.view.model';
 
 @Controller('product')
 export class ProductController {
