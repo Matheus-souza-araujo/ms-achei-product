@@ -17,12 +17,14 @@ import { CreateProductDTO } from '../dto/product/create-product.dto';
 import { FindAllProductUseCase } from 'src/app/usecases/products/find-all-product.usecase';
 import { FindAllProductDTO } from '../dto/product/find-all-product.dto';
 import { ProductViewModel } from '../view-models/product.view.model';
+import { FindByIdProductUseCase } from 'src/app/usecases/products/find-by-id-product.usecase';
 
 @Controller('product')
 export class ProductController {
   constructor(
     private readonly createProductUseCase: CreateProductUseCase,
     private readonly findAllProductUseCase: FindAllProductUseCase,
+    private readonly findByIdProductUseCase: FindByIdProductUseCase,
   ) {}
 
   @Post()
@@ -74,5 +76,12 @@ export class ProductController {
     });
 
     return products.map(ProductViewModel.toHttp);
+  }
+
+  @Get('/:productId')
+  async findById(@Param('productId') productId: string) {
+    const product = await this.findByIdProductUseCase.execute(productId);
+
+    return ProductViewModel.toHttp(product);
   }
 }

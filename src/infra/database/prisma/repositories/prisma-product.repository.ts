@@ -28,7 +28,6 @@ export class PrismaProductRepository implements ProductRepository {
         ImageProduct: true,
       },
     });
-    console.log(productCreated);
 
     return PrismaProductMapper.toDomain(productCreated);
   }
@@ -46,10 +45,26 @@ export class PrismaProductRepository implements ProductRepository {
         storeId: true,
         createdAt: true,
         updatedAt: true,
-        ProductCategorie: true,
-        ImageProduct: true,
+        ProductCategorie: {
+          select: {
+            Categorie: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        ImageProduct: {
+          select: {
+            image: true,
+          },
+        },
       },
     });
+
+    if (!product) {
+      return null;
+    }
 
     return PrismaProductMapper.toDomain(product);
   }
@@ -97,8 +112,6 @@ export class PrismaProductRepository implements ProductRepository {
         },
       },
     });
-
-    console.log(products[0]);
 
     if (products.length < 1) {
       return [];
