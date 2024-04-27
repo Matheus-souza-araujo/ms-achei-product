@@ -67,7 +67,7 @@ export class CreateProductUseCase {
       status: ImageProductStatus.ACTIVE,
     });
 
-    await this.imageProductRepository.craete(newProductImage);
+    await this.imageProductRepository.create(newProductImage);
 
     const productCategorie = new ProductCategorieEntity({
       productId: newProduct.product_id,
