@@ -4,6 +4,7 @@ import { PrismaService } from '@infra/database/prisma/prisma.service';
 import { ProductEntity } from '@app/entities/product.entity';
 import { PrismaProductMapper } from '@infra/database/prisma/mappers/prisma-product.mapper';
 import { FindManyProduct } from '@app/repositories/types/product-repository/find-many,type';
+import { ProductStatus } from '@app/libs/enums/product-status';
 
 @Injectable()
 export class PrismaProductRepository implements ProductRepository {
@@ -132,6 +133,9 @@ export class PrismaProductRepository implements ProductRepository {
   }
 
   async deleteById(productId: string): Promise<void> {
-    await this.prismaService.product.delete({ where: { productId } });
+    await this.prismaService.product.update({
+      where: { productId },
+      data: { status: ProductStatus.INACTIVE },
+    });
   }
 }
