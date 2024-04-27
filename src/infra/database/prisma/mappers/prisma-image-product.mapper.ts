@@ -17,7 +17,7 @@ export class PrismaImageProductMapper {
     };
   }
 
-  static toDomain(raw: ImageProduct): ImageProductEntity {
+  static toDomain(raw: Partial<ImageProduct>): ImageProductEntity {
     return new ImageProductEntity(
       {
         productId: raw.productId,

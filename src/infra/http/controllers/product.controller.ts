@@ -28,6 +28,7 @@ import { AddCategorieProductDTO } from '@infra/http/dto/product/add-categorie-pr
 import { AddImageProductUseCase } from '@app/usecases/products/add-image-product.usecase';
 import { regexSupportFiles } from '@app/libs/helpers/rejex-support.files';
 import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-category-product.usecase';
+import { DeleteImageProductUseCase } from '@app/usecases/products/delete-image-product.usecase';
 
 @Controller('product')
 export class ProductController {
@@ -39,6 +40,7 @@ export class ProductController {
     private readonly addCategoryProductUseCase: AddCategoryProductUseCase,
     private readonly addImageProductUseCase: AddImageProductUseCase,
     private readonly deleteCategoryProductUseCase: DeleteCategoryProductUseCase,
+    private readonly deleteImageProductUseCase: DeleteImageProductUseCase,
   ) {}
 
   @Post()
@@ -153,5 +155,10 @@ export class ProductController {
     @Param('categorieId') categorieId: string,
   ) {
     await this.deleteCategoryProductUseCase.execute({ productId, categorieId });
+  }
+
+  @Delete('delete-image/:imageProductId')
+  async deleteImageProduct(@Param('imageProductId') imageProductId: string) {
+    await this.deleteImageProductUseCase.execute(imageProductId);
   }
 }

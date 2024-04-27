@@ -17,4 +17,33 @@ export class PrismaImageProductRepository implements ImageProductRepository {
 
     return PrismaImageProductMapper.toDomain(imageProductCreated);
   }
+
+  async findByImageProductId(
+    imageProductId: string,
+  ): Promise<ImageProductEntity> {
+    const imageProduct = await this.prismaService.imageProduct.findUnique({
+      where: { imageProductId },
+      select: {
+        imageProductId: true,
+        image: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!imageProduct) {
+      return null;
+    }
+
+    return PrismaImageProductMapper.toDomain(imageProduct);
+  }
+
+  async deleteByImageProductId(imageProductId: string): Promise<void> {
+    await this.prismaService.imageProduct.delete({
+      where: {
+        imageProductId,
+      },
+    });
+  }
 }
