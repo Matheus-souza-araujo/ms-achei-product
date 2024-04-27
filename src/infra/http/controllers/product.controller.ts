@@ -22,6 +22,8 @@ import { FindAllProductDTO } from '@infra/http/dto/product/find-all-product.dto'
 import { ProductViewModel } from '@infra/http/view-models/product.view.model';
 import { UpdateProductDTO } from '@infra/http/dto/product/update-product.dto';
 import { UpdateProductUseCase } from '@app/usecases/products/update-product.usecase';
+import { AddCategoryProductUseCase } from '@app/usecases/products/add-category-product.usecase';
+import { AddCategorieProductDTO } from '@infra/http/dto/product/add-categorie-product.dto';
 
 @Controller('product')
 export class ProductController {
@@ -30,6 +32,7 @@ export class ProductController {
     private readonly findAllProductUseCase: FindAllProductUseCase,
     private readonly findByIdProductUseCase: FindByIdProductUseCase,
     private readonly updateProductUseCase: UpdateProductUseCase,
+    private readonly addCategoryProductUseCase: AddCategoryProductUseCase,
   ) {}
 
   @Post()
@@ -96,7 +99,7 @@ export class ProductController {
     @Body()
     { name, description, status, storeId, offer, price }: UpdateProductDTO,
   ) {
-    const product = await this.updateProductUseCase.execute({
+    await this.updateProductUseCase.execute({
       productId,
       name,
       description,
@@ -104,6 +107,16 @@ export class ProductController {
       storeId,
       offer,
       price,
+    });
+  }
+
+  @Post('/add-categorie')
+  async addCategoryProduct(
+    @Body() { productId, categorieId }: AddCategorieProductDTO,
+  ) {
+    await this.addCategoryProductUseCase.execute({
+      productId,
+      categorieId,
     });
   }
 }

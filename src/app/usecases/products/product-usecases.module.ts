@@ -4,7 +4,8 @@ import { FindAllProductUseCase } from '@app/usecases/products/find-all-product.u
 import { FindByIdProductUseCase } from '@app/usecases/products/find-by-id-product.usecase';
 import { DatabaseModule } from '@infra/database/database.module';
 import { StorageModule } from '@infra/services/storage/storage.module';
-import { UpdateProductUseCase } from './update-product.usecase';
+import { UpdateProductUseCase } from '@app/usecases/products/update-product.usecase';
+import { AddCategoryProductUseCase } from '@app/usecases/products/add-category-product.usecase';
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -13,12 +14,14 @@ import { UpdateProductUseCase } from './update-product.usecase';
     FindAllProductUseCase,
     FindByIdProductUseCase,
     UpdateProductUseCase,
+    AddCategoryProductUseCase,
   ],
   exports: [
     CreateProductUseCase,
     FindAllProductUseCase,
     FindByIdProductUseCase,
     UpdateProductUseCase,
+    AddCategoryProductUseCase,
   ],
 })
 export class ProductUseCaseModule {}
