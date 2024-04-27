@@ -8,7 +8,7 @@ import { ImageProductEntity } from '@app/entities/image-product.entity';
 export class PrismaImageProductRepository implements ImageProductRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async craete(imageProduct: ImageProductEntity): Promise<ImageProductEntity> {
+  async create(imageProduct: ImageProductEntity): Promise<ImageProductEntity> {
     const imageProductPrisma = PrismaImageProductMapper.toPrisma(imageProduct);
 
     const imageProductCreated = await this.prismaService.imageProduct.create({

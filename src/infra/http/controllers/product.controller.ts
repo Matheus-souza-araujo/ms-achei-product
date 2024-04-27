@@ -24,6 +24,8 @@ import { UpdateProductDTO } from '@infra/http/dto/product/update-product.dto';
 import { UpdateProductUseCase } from '@app/usecases/products/update-product.usecase';
 import { AddCategoryProductUseCase } from '@app/usecases/products/add-category-product.usecase';
 import { AddCategorieProductDTO } from '@infra/http/dto/product/add-categorie-product.dto';
+import { AddImageProductUseCase } from '@app/usecases/products/add-image-product.usecase';
+import { regexSupportFiles } from '@app/libs/helpers/rejex-support.files';
 
 @Controller('product')
 export class ProductController {
@@ -33,6 +35,7 @@ export class ProductController {
     private readonly findByIdProductUseCase: FindByIdProductUseCase,
     private readonly updateProductUseCase: UpdateProductUseCase,
     private readonly addCategoryProductUseCase: AddCategoryProductUseCase,
+    private readonly addImageProductUseCase: AddImageProductUseCase,
   ) {}
 
   @Post()
@@ -52,7 +55,9 @@ export class ProductController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 1000000 }),
-          new FileTypeValidator({ fileType: 'image/jpeg' }),
+          new FileTypeValidator({
+            fileType: regexSupportFiles,
+          }),
         ],
       }),
     )
@@ -72,7 +77,7 @@ export class ProductController {
     return ProductViewModel.toHttp(product);
   }
 
-  @Get('/find-all')
+  @Get('find-all')
   async findAll(
     @Query() { categorieId, offer, status, storeId }: FindAllProductDTO,
   ) {
@@ -110,7 +115,7 @@ export class ProductController {
     });
   }
 
-  @Post('/add-categorie')
+  @Post('add-categorie')
   async addCategoryProduct(
     @Body() { productId, categorieId }: AddCategorieProductDTO,
   ) {
@@ -118,5 +123,24 @@ export class ProductController {
       productId,
       categorieId,
     });
+  }
+
+  @Post('add-image/:productId')
+  @UseInterceptors(FileInterceptor('file'))
+  async addImageProduct(
+    @Param('productId') productId: string,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000 }),
+          new FileTypeValidator({
+            fileType: regexSupportFiles,
+          }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    await this.addImageProductUseCase.execute({ productId, image: file });
   }
 }
