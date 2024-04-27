@@ -9,6 +9,7 @@ import { AddCategoryProductUseCase } from '@app/usecases/products/add-category-p
 import { AddImageProductUseCase } from '@app/usecases/products/add-image-product.usecase';
 import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-category-product.usecase';
 import { DeleteImageProductUseCase } from '@app/usecases/products/delete-image-product.usecase';
+import { DeleteProductUseCase } from '@app/usecases/products/delete-product.usecase';
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -21,6 +22,7 @@ import { DeleteImageProductUseCase } from '@app/usecases/products/delete-image-p
     AddImageProductUseCase,
     DeleteCategoryProductUseCase,
     DeleteImageProductUseCase,
+    DeleteProductUseCase,
   ],
   exports: [
     CreateProductUseCase,
@@ -31,6 +33,7 @@ import { DeleteImageProductUseCase } from '@app/usecases/products/delete-image-p
     AddImageProductUseCase,
     DeleteCategoryProductUseCase,
     DeleteImageProductUseCase,
+    DeleteProductUseCase,
   ],
 })
 export class ProductUseCaseModule {}

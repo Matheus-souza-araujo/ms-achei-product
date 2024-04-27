@@ -29,6 +29,7 @@ import { AddImageProductUseCase } from '@app/usecases/products/add-image-product
 import { regexSupportFiles } from '@app/libs/helpers/rejex-support.files';
 import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-category-product.usecase';
 import { DeleteImageProductUseCase } from '@app/usecases/products/delete-image-product.usecase';
+import { DeleteProductUseCase } from '@app/usecases/products/delete-product.usecase';
 
 @Controller('product')
 export class ProductController {
@@ -41,6 +42,7 @@ export class ProductController {
     private readonly addImageProductUseCase: AddImageProductUseCase,
     private readonly deleteCategoryProductUseCase: DeleteCategoryProductUseCase,
     private readonly deleteImageProductUseCase: DeleteImageProductUseCase,
+    private readonly deleteProductUseCase: DeleteProductUseCase,
   ) {}
 
   @Post()
@@ -160,5 +162,10 @@ export class ProductController {
   @Delete('delete-image/:imageProductId')
   async deleteImageProduct(@Param('imageProductId') imageProductId: string) {
     await this.deleteImageProductUseCase.execute(imageProductId);
+  }
+
+  @Delete('/:productId')
+  async deleteProduct(@Param('productId') productId: string) {
+    await this.deleteProductUseCase.execute(productId);
   }
 }
