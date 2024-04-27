@@ -9,7 +9,7 @@ export class PrismaProductCategorieMapper {
     productCategorieEntity: ProductCategorieEntity,
   ): ProductCategorie {
     return {
-      productCategorieId: productCategorieEntity.product_categorie_id,
+      productCategorieId: productCategorieEntity.productCategorieId,
       categorieId: productCategorieEntity.categorieId,
       productId: productCategorieEntity.productId,
       status:
