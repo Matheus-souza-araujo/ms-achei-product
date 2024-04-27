@@ -6,4 +6,6 @@ export abstract class StorageService {
     fileName: string,
     file: Buffer,
   ): Promise<uploadFileResponse>;
+
+  abstract removeFile(path: string): Promise<void>;
 }

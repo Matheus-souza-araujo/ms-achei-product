@@ -1,9 +1,14 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomUUID } from 'crypto';
 import { FailedToUploadImage } from '@infra/services/storage/s3/errors/failed-to-upload-image.error';
 import { StorageService, uploadFileResponse } from '@app/services/storage';
+import { FailedToDeleteImage } from './errors/failed-to-delete-image.error';
 
 @Injectable()
 export class S3Service implements StorageService {
@@ -35,5 +40,20 @@ export class S3Service implements StorageService {
     return {
       path: `${process.env.AWS_BUCKET_URL}/${fileId}`,
     };
+  }
+
+  async removeFile(path: string): Promise<void> {
+    const parts = path.split(`${process.env.AWS_BUCKET_URL}/`);
+    try {
+      await this.s3Client.send(
+        new DeleteObjectCommand({
+          Bucket: process.env.AWS_BUCKET,
+          Key: parts[1],
+        }),
+      );
+    } catch (error) {
+      Logger.error('S3 Service error:', error);
+      throw new FailedToDeleteImage();
+    }
   }
 }

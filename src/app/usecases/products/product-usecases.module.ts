@@ -8,6 +8,7 @@ import { UpdateProductUseCase } from '@app/usecases/products/update-product.usec
 import { AddCategoryProductUseCase } from '@app/usecases/products/add-category-product.usecase';
 import { AddImageProductUseCase } from '@app/usecases/products/add-image-product.usecase';
 import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-category-product.usecase';
+import { DeleteImageProductUseCase } from '@app/usecases/products/delete-image-product.usecase';
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -19,6 +20,7 @@ import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-cate
     AddCategoryProductUseCase,
     AddImageProductUseCase,
     DeleteCategoryProductUseCase,
+    DeleteImageProductUseCase,
   ],
   exports: [
     CreateProductUseCase,
@@ -28,6 +30,7 @@ import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-cate
     AddCategoryProductUseCase,
     AddImageProductUseCase,
     DeleteCategoryProductUseCase,
+    DeleteImageProductUseCase,
   ],
 })
 export class ProductUseCaseModule {}
