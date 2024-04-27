@@ -4,6 +4,7 @@ import { FindByIdProductUseCase } from '@app/usecases/products/find-by-id-produc
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
@@ -26,6 +27,7 @@ import { AddCategoryProductUseCase } from '@app/usecases/products/add-category-p
 import { AddCategorieProductDTO } from '@infra/http/dto/product/add-categorie-product.dto';
 import { AddImageProductUseCase } from '@app/usecases/products/add-image-product.usecase';
 import { regexSupportFiles } from '@app/libs/helpers/rejex-support.files';
+import { DeleteCategoryProductUseCase } from '@app/usecases/products/delete-category-product.usecase';
 
 @Controller('product')
 export class ProductController {
@@ -36,6 +38,7 @@ export class ProductController {
     private readonly updateProductUseCase: UpdateProductUseCase,
     private readonly addCategoryProductUseCase: AddCategoryProductUseCase,
     private readonly addImageProductUseCase: AddImageProductUseCase,
+    private readonly deleteCategoryProductUseCase: DeleteCategoryProductUseCase,
   ) {}
 
   @Post()
@@ -142,5 +145,13 @@ export class ProductController {
     file: Express.Multer.File,
   ) {
     await this.addImageProductUseCase.execute({ productId, image: file });
+  }
+
+  @Delete('delete-categorie/categorie/:categorieId/product/:productId')
+  async deleteCategoryProduct(
+    @Param('productId') productId: string,
+    @Param('categorieId') categorieId: string,
+  ) {
+    await this.deleteCategoryProductUseCase.execute({ productId, categorieId });
   }
 }

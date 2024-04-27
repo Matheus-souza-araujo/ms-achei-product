@@ -8,4 +8,7 @@ export abstract class ProductCategorieRepository {
     productId: string,
     categorieId: string,
   ): Promise<ProductCategorieEntity>;
+  abstract deleteByProductCategorieId(
+    productCategorieId: string,
+  ): Promise<void>;
 }

@@ -52,4 +52,10 @@ export class PrismaProductCategorieRepository
 
     return PrismaProductCategorieMapper.toDomain(productCategorie);
   }
+
+  async deleteByProductCategorieId(productCategorieId: string): Promise<void> {
+    await this.prismaService.productCategorie.delete({
+      where: { productCategorieId },
+    });
+  }
 }

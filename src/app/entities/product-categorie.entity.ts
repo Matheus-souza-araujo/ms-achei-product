@@ -33,7 +33,7 @@ export class ProductCategorieEntity {
     };
   }
 
-  public get product_categorie_id() {
+  public get productCategorieId() {
     return this._product_categorie_id;
   }
 

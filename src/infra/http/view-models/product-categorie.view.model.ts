@@ -5,7 +5,7 @@ import { ProductCategorieEntity } from '@app/entities/product-categorie.entity';
 export class ProductCategorieViewModel {
   static toHttp(productCategorie: Partial<ProductCategorieEntity>) {
     return {
-      productCategorieId: productCategorie.product_categorie_id,
+      productCategorieId: productCategorie.productCategorieId,
       categorieId: productCategorie.categorieId,
       productId: productCategorie.productId,
       status: productCategorie.status,
